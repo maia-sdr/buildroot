@@ -1,0 +1,29 @@
+#!/bin/sh
+# Add IP addresses 192.168.[0-254].0/24 to usb0 when ipaddrmulti is set
+
+case "$1" in
+	start)
+                MULTI=`fw_printenv -n ipaddrmulti 2> /dev/null || echo 0`
+                if [ $MULTI = 1 ]
+                then
+                    echo -n "Setting up multiple IP addresses: "
+                    for net in `seq 0 254`
+                    do
+                        ip address add 192.168.${net}.1/24 dev usb0
+                    done
+                    echo "OK"
+                fi
+		;;
+
+	stop)
+		;;
+
+	restart)
+		$0 stop
+		$0 start
+		;;
+
+	*)
+		echo "Usage: $0 {start|stop|restart}"
+		exit 1
+esac
