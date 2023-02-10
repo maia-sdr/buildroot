@@ -64,6 +64,7 @@ ${INSTALL} -D -m 0755 ${BOARD_DIR}/S21misc ${TARGET_DIR}/etc/init.d/
 ${INSTALL} -D -m 0755 ${BOARD_DIR}/S23udc ${TARGET_DIR}/etc/init.d/
 ${INSTALL} -D -m 0755 ${BOARD_DIR}/S40network ${TARGET_DIR}/etc/init.d/
 ${INSTALL} -D -m 0755 ${BOARD_DIR}/S41network ${TARGET_DIR}/etc/init.d/
+${INSTALL} -D -m 0755 ${BOARD_DIR}/S42network ${TARGET_DIR}/etc/init.d/
 ${INSTALL} -D -m 0755 ${BOARD_DIR}/S45msd ${TARGET_DIR}/etc/init.d/
 ${INSTALL} -D -m 0644 ${BOARD_DIR}/fw_env.config ${TARGET_DIR}/etc/
 ${INSTALL} -D -m 0644 ${BOARD_DIR}/VERSIONS ${TARGET_DIR}/opt/
@@ -90,3 +91,14 @@ ln -sf ../../wpa_supplicant/ifupdown.sh ${TARGET_DIR}/etc/network/if-pre-up.d/wp
 ln -sf ../../wpa_supplicant/ifupdown.sh ${TARGET_DIR}/etc/network/if-post-down.d/wpasupplicant
 
 ln -sf device_reboot ${TARGET_DIR}/usr/sbin/pluto_reboot
+
+# Maia SDR specific files
+${INSTALL} -d ${TARGET_DIR}/lib/modules
+${INSTALL} -D -m 0644 ${BOARD_DIR}/maia-sdr.ko ${TARGET_DIR}/lib/modules/
+${INSTALL} -D -m 0755 ${BOARD_DIR}/S50maia-kmod ${TARGET_DIR}/etc/init.d/
+${INSTALL} -D -m 0755 ${BOARD_DIR}/S60maia-httpd ${TARGET_DIR}/etc/init.d/
+# TODO: do not install maia-httpd and maia-wasm to /root
+${INSTALL} -D -m 0755 ${BOARD_DIR}/maia-httpd ${TARGET_DIR}/root/
+${INSTALL} -D -m 0644 ${BOARD_DIR}/maia-wasm/assets/* ${TARGET_DIR}/root/
+${INSTALL} -d ${TARGET_DIR}/root/pkg
+${INSTALL} -D -m 0644 ${BOARD_DIR}/maia-wasm/pkg/* ${TARGET_DIR}/root/pkg/
