@@ -20,19 +20,16 @@ handle_frimware_frm () {
 	FILE="$1"
 	MAGIC="$2"
 	md5=`tail -c 33 ${FILE}`
-	head -c -33 ${FILE} > /opt/firmware.frm
-	FRM_SIZE=`cat /opt/firmware.frm | wc -c | xargs printf "%X\n"`
-	frm=`md5sum /opt/firmware.frm | cut -d ' ' -f 1`
+	FRM_SIZE=`head -c -33 ${FILE} | wc -c | xargs printf "%X\n"`
+	frm=`head -c -33 ${FILE} | md5sum | cut -d ' ' -f 1`
 	if [ "$frm" = "$md5" ]
 	then
 		flash_indication_on
-		grep -q "${MAGIC}" /opt/firmware.frm && dd if=/opt/firmware.frm of=/dev/mtdblock3 bs=64k && fw_setenv fit_size ${FRM_SIZE} && echo "Done" || echo "Failed"
+		grep -q "${MAGIC}" ${FILE} && dd if=${FILE} of=/dev/mtdblock3 bs=64k && fw_setenv fit_size ${FRM_SIZE} && echo "Done" || echo "Failed"
 		flash_indication_off
-		rm -f /opt/firmware.frm
 		sync
 		exit 0
 	else
-		rm -f /opt/firmware.frm
 		echo Failed Checksum error: $frm $md5
 		exit 1
 	fi
