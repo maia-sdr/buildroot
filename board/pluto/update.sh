@@ -184,20 +184,18 @@ handle_frimware_frm () {
 	MAGIC="$2"
 	rm -f /mnt/msd/SUCCESS /mnt/msd/FAILED /mnt/msd/FAILED_FIRMWARE_CHSUM_ERROR
 	md5=`tail -c 33 ${FILE}`
-	head -c -33 ${FILE} > /opt/firmware.frm
-	FRM_SIZE=`cat /opt/firmware.frm | wc -c | xargs printf "%X\n"`
-	frm=`md5sum /opt/firmware.frm | cut -d ' ' -f 1`
+	FRM_SIZE=`head -c -33 ${FILE} | wc -c | xargs printf "%X\n"`
+	frm=`head -c -33 ${FILE} | md5sum | cut -d ' ' -f 1`
 	if [ "$frm" = "$md5" ]
 	then
 		flash_indication_on
-		grep -q "${MAGIC}"  /opt/firmware.frm && dd if=/opt/firmware.frm of=/dev/mtdblock3 bs=64k && fw_setenv fit_size ${FRM_SIZE} && do_reset=1 && touch /mnt/msd/SUCCESS || touch /mnt/msd/FAILED
+		grep -q "${MAGIC}" ${FILE} && dd if=${FILE} of=/dev/mtdblock3 bs=64k && fw_setenv fit_size ${FRM_SIZE} && do_reset=1 && touch /mnt/msd/SUCCESS || touch /mnt/msd/FAILED
 		flash_indication_off
 	else
 		echo $frm $md5 > /mnt/msd/FAILED_FIRMWARE_CHSUM_ERROR
 		do_reset=0
 	fi
 
-	rm -f ${FILE} /opt/firmware.frm
 	sync
 }
 
