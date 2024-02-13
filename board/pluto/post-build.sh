@@ -103,3 +103,7 @@ ${INSTALL} -D -m 0755 ${BOARD_DIR}/maia-httpd ${TARGET_DIR}/root/
 ${INSTALL} -D -m 0644 ${BOARD_DIR}/maia-wasm/assets/* ${TARGET_DIR}/root/
 ${INSTALL} -d ${TARGET_DIR}/root/pkg
 ${INSTALL} -D -m 0644 ${BOARD_DIR}/maia-wasm/pkg/* ${TARGET_DIR}/root/pkg/
+# Install IQEngine client
+${INSTALL} -d ${TARGET_DIR}/root/iqengine
+${INSTALL} -D -m 0644 ${BOARD_DIR}/iqengine/* ${TARGET_DIR}/root/iqengine/
+${INSTALL} -D -m 0644 ${BOARD_DIR}/iqengine-public/* ${TARGET_DIR}/root/
