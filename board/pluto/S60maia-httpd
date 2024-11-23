@@ -2,7 +2,10 @@
 
 case "$1" in
   start)
-	echo -n "Starting maia-httpd: "
+        echo -n "Starting maia-httpd: "
+        if [ -f /root/maia-httpd.xz ]; then
+            xz -d /root/maia-httpd.xz
+        fi
         cd /root
         start-stop-daemon -S -b -q -m -p /var/run/maia-httpd.pid -x /root/maia-httpd -- --ssl-cert /mnt/jffs2/maia-httpd.crt --ssl-key /mnt/jffs2/maia-httpd.key --ca-cert /mnt/jffs2/maia-sdr-ca.crt
         cd - > /dev/null

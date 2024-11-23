@@ -101,7 +101,8 @@ ${INSTALL} -D -m 0755 ${BOARD_DIR}/S50maia-sdr-certificates ${TARGET_DIR}/etc/in
 ${INSTALL} -D -m 0644 ${BOARD_DIR}/maia-httpd-extfile ${TARGET_DIR}/etc/ssl/
 ${INSTALL} -D -m 0755 ${BOARD_DIR}/S60maia-httpd ${TARGET_DIR}/etc/init.d/
 # TODO: do not install maia-httpd and maia-wasm to /root
-${INSTALL} -D -m 0755 ${BOARD_DIR}/maia-httpd ${TARGET_DIR}/root/
+xz -f -k ${BOARD_DIR}/maia-httpd
+${INSTALL} -D -m 0755 ${BOARD_DIR}/maia-httpd.xz ${TARGET_DIR}/root/
 ${INSTALL} -D -m 0644 ${BOARD_DIR}/maia-wasm/assets/* ${TARGET_DIR}/root/
 ${INSTALL} -d ${TARGET_DIR}/root/pkg
 ${INSTALL} -D -m 0644 ${BOARD_DIR}/maia-wasm/pkg/* ${TARGET_DIR}/root/pkg/
