@@ -97,6 +97,8 @@ ln -sf device_reboot ${TARGET_DIR}/usr/sbin/pluto_reboot
 ${INSTALL} -d ${TARGET_DIR}/lib/modules
 ${INSTALL} -D -m 0644 ${BOARD_DIR}/maia-sdr.ko ${TARGET_DIR}/lib/modules/
 ${INSTALL} -D -m 0755 ${BOARD_DIR}/S50maia-kmod ${TARGET_DIR}/etc/init.d/
+${INSTALL} -D -m 0755 ${BOARD_DIR}/S50maia-sdr-certificates ${TARGET_DIR}/etc/init.d/
+${INSTALL} -D -m 0644 ${BOARD_DIR}/maia-httpd-extfile ${TARGET_DIR}/etc/ssl/
 ${INSTALL} -D -m 0755 ${BOARD_DIR}/S60maia-httpd ${TARGET_DIR}/etc/init.d/
 # TODO: do not install maia-httpd and maia-wasm to /root
 ${INSTALL} -D -m 0755 ${BOARD_DIR}/maia-httpd ${TARGET_DIR}/root/
