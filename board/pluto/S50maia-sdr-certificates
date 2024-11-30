@@ -31,8 +31,8 @@ case "$1" in
 	        -in /tmp/maia-httpd.csr -CA /mnt/jffs2/maia-sdr-ca.crt -CAkey /tmp/maia-sdr-ca.key \
                 -extfile /etc/ssl/maia-httpd-extfile \
 	        -CAcreateserial -CAserial /tmp/maia-sdr-ca.srl -out /mnt/jffs2/maia-httpd.crt
-        # remove CA key and CSR
-        rm -f /tmp/maia-sdr-ca.key /tmp/maia-sdr-ca.srl
+        # remove CA key, CSR and serial
+        rm -f /tmp/maia-sdr-ca.key /tmp/maia-httpd.csr /tmp/maia-sdr-ca.srl
         [ $? = 0 ] && echo "OK" || echo "FAIL"
         ;;
     stop)
